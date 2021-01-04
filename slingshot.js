@@ -1,9 +1,9 @@
 class Slingshot{
-    constructor(bird, log6){
+    constructor(bird, point){
         //JSON { key: value, key1: value}
         var options = {
             bodyA: bird,
-            bodyB: log6,
+            pointB: point,
             length: 5,
             stiffness: 0.2
         }
@@ -12,9 +12,15 @@ class Slingshot{
         World.add(world, this.sling);   
     }
 
+    fly(){
+    this.sling.bodyA = null;
+    }
+
     display(){
+        if(this.sling.bodyA){
+
         var pointA = this.sling.bodyA.position; // bird body
-        var pointB = this.sling.bodyB.position;
+        var pointB = this.sling.pointB;
 
         push ();
         //line between two body (x, y)
@@ -23,6 +29,7 @@ class Slingshot{
         fill ("brown");
         line (pointA.x, pointA.y, pointB.x, pointB.y);
         pop ();
+    }
     }
     
    

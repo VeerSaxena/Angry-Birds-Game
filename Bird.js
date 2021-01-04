@@ -7,8 +7,8 @@ class Bird extends BaseClass{
     display(){
       super.display(); // accessing parent's display
       var pos = this.body.position;
-      pos.x = mouseX;
-      pos.y = mouseY;
+      //pos.x = mouseX;
+      //pos.y = mouseY;
     };
   };
   
