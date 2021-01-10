@@ -3,7 +3,7 @@ class BaseClass {
       var options = {
         'density':0.8,
         'friction': 1.0,
-        'restitution':0.5
+        'restitution':1.0
       };
       this.body = Bodies.rectangle(x, y, width, height, options);
       this.width = width;
