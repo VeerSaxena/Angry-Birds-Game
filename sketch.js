@@ -6,6 +6,8 @@ var engine, world;
 var box1, pig1;
 var platform;
 var bgroundImage;
+var gameState = "onSling";
+var score = 0;
 
 function preload(){
 bgroundImage = loadImage('sprites/bg.png');
@@ -44,9 +46,18 @@ function setup(){
 }
 
 function draw(){
-    if(bgroundImage)
-    background(bgroundImage);
+    if(bgroundImage){
+        background(bgroundImage);
+    }else{
+        background("white");
+    }
+   
     Engine.update(engine);
+
+    fill ("white");
+    textSize(32);
+    text ("Score: "+ score, 900, 40);
+
     //console.log(box2.body.position.x);
     //console.log(box2.body.position.y);
     //console.log(box2.body.angle);
@@ -55,11 +66,14 @@ function draw(){
     ground.display();
     platform.display();
     pig1.display();
+    pig1.score();
     log1.display();
 
     box3.display();
     box4.display();
     pig3.display();
+    //score is the method of pig class
+    pig3.score();
     log3.display();
 
     box5.display();
@@ -72,12 +86,27 @@ function draw(){
     //log6.display();
 }
     function mouseDragged() {
-    Matter.Body.setPosition(bird.body, { x: mouseX, y: mouseY })
-
+        if(gameState === "onSling"){
+            Matter.Body.setPosition(bird.body, { x: mouseX, y: mouseY });
+        }
     }
    
     function mouseReleased() {
         slingshot.fly();
+        gameState = "launched";
+    }
+
+    function keyPressed(){
+        if(keyCode === 32){
+            // to solve memory leak/ wastage of memory
+            bird.trajectory = [];
+            Matter.Body.setPosition(bird.body, { x: 200, y: 50 });
+            //make the bird go to original pos before attaching to sling
+            
+            //to attach bird back to slingshot
+            slingshot.attach(bird.body);
+            gameState = "onSling"
+        }
     }
 
     async function getTime(){
@@ -85,7 +114,7 @@ function draw(){
       var responseJson = await response.json();
       var dateTime  = responseJson.datetime;
       var hour = dateTime.slice(11, 13);
-      if(hour > 06 && hour < 17){
+      if(hour > 06 && hour < 12){
           bg = "sprites/bg.png";
       }else{
         bg = "sprites/bg2.jpg";
