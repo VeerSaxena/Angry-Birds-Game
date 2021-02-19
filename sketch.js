@@ -117,7 +117,7 @@ function mouseReleased() {
 function keyPressed() {
     if (keyCode === 32) {
         // to solve memory leak/ wastage of memory
-        birds[birds.length - 1].trajectory = [];
+        birds.trajectory = [];
         Matter.Body.setPosition(birds[birds.length - 1].body, { x: 200, y: 50 });
         //make the bird go to original pos before attaching to sling
 
